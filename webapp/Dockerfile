@@ -1,21 +1,21 @@
-# Docker file for react app created using vite
-FROM node:latest as build
-# Create app directory
-WORKDIR /app
-# Install app dependencies
-COPY package*.json ./
-RUN npm install
-# Build app
+# need node to build but to run we need nginx so we want to store the build operation done on node to a variable to use on nginx.
+FROM node:16 AS buildfile
+
+# same way we will create a folder to copy or code and use
+RUN mkdir /frontend
+
+# set working dir
+WORKDIR /frontend
+
+#copy code
 COPY . .
+
+# install npm and build the code
+RUN npm install
 RUN npm run build
 
-# Docker file for nginx server to serve react app build files (spa routing)
-FROM nginx:alpine
-COPY --from=build /app/dist /usr/share/nginx/html
-# This is required to make nginx serve index.html for all routes
-COPY nginx.conf /etc/nginx/conf.d/default.conf 
-EXPOSE 80
-# If you add a custom CMD in the Dockerfile, be sure to include -g daemon off; 
-# in the CMD in order for nginx to stay in the foreground, so that Docker can 
-# track the process properly (otherwise your container will stop immediately after starting)!
-CMD ["nginx", "-g", "daemon off;"]
+# post build dist file will be generated. copy dist code which is stored on buildfile ref variable from node to nginx default path
+FROM nginx
+
+#copy to nginx
+COPY --from=buildfile /frontend/dist /usr/share/nginx/html/
