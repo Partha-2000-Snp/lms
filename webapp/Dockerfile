@@ -19,3 +19,5 @@ FROM nginx
 
 #copy to nginx
 COPY --from=buildfile /frontend/dist /usr/share/nginx/html/
+
+# modified for jenkins test
