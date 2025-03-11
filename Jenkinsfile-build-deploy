@@ -11,9 +11,7 @@ pipeline {
         stage('deploy lms frontend') {
             steps {
                 echo 'starting deployment'
-                sh 'cd webapp'
-                sh 'ls'
-                sh 'sudo cp -r dist/* /var/www/html'
+                sh 'cd webapp && sudo cp -r dist/* /var/www/html'
                 echo 'deployment done'
             }
         }
