@@ -1,5 +1,5 @@
 pipeline {
-    agent lms-fe
+    agent {lms-fe}
     stages {
         stage('build lms frontend') {
             steps {
