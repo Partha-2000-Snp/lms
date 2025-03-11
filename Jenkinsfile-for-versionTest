@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-        stage('sonar analysis') {
+        stage('read json version for assigning tag to artifact') {
             steps {
                 script {
                     def packageJson = readJSON file: 'webapp/package.json'
