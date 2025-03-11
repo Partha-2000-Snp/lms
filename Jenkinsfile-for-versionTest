@@ -3,9 +3,11 @@ pipeline {
     stages {
         stage('sonar analysis') {
             steps {
-                def packageJson = readJSON file: 'package.json'
-                def Version = packageJson.version
-                echo "${Version}"
+                script {
+                    def packageJson = readJSON file: 'package.json'
+                    def Version = packageJson.version
+                    echo "${Version}"
+                }
             }
         }
     }
