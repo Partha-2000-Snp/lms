@@ -12,6 +12,7 @@ pipeline {
             steps {
                 echo 'starting deployment'
                 sh 'cd webapp'
+                sh 'ls'
                 sh 'sudo cp -r dist/* /var/www/html'
                 echo 'deployment done'
             }
